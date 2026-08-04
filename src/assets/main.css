@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Dark mode
+   Tailwind v4 keys `dark:` off the OS preference by default. We override it to
+   a class on <html> so the toggle can beat the OS setting. The inline script in
+   index.html sets that class before first paint.
+--------------------------------------------------------------------------- */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Two layers, deliberately:
+     1. `:root` / `.dark` below hold raw *values* that swap per colour scheme.
+     2. `@theme inline` maps them to Tailwind utility names.
+   `inline` matters — it makes `bg-surface` resolve to var(--surface) at use
+   site, so a single class works in both schemes with no `dark:` duplication.
+
+   To rebrand the whole site, change --accent here. Nothing else needs editing.
+--------------------------------------------------------------------------- */
+/* Static tokens. A plain `@theme` block both generates utilities *and* emits
+   the variables to :root, which the hand-written rules below rely on. */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Fluid display scale — no media queries needed for headline sizing. */
+  --text-display: clamp(2.75rem, 1.6rem + 5vw, 5.25rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-headline: clamp(1.875rem, 1.3rem + 2.2vw, 3rem);
+  --text-headline--line-height: 1.12;
+  --text-headline--letter-spacing: -0.025em;
+
+  --text-title: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --text-title--line-height: 1.25;
+  --text-title--letter-spacing: -0.015em;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Scheme-dependent colours. `inline` is required here: it makes `bg-surface`
+   compile to var(--surface) at the use site, so one class serves both schemes
+   and `.dark` can swap the underlying value. */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+}
+
+:root {
+  --canvas: oklch(0.99 0.003 250);
+  --surface: oklch(1 0 0);
+  --raised: oklch(0.972 0.004 250);
+  --line: oklch(0.9 0.006 250);
+  --ink: oklch(0.22 0.012 250);
+  --muted: oklch(0.49 0.012 250);
+  --faint: oklch(0.63 0.01 250);
+
+  --accent: oklch(0.62 0.13 187);
+  --accent-strong: oklch(0.5 0.12 187);
+  --accent-soft: oklch(0.62 0.13 187 / 0.11);
+  --on-accent: oklch(1 0 0);
+
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: oklch(0.165 0.014 250);
+  --surface: oklch(0.198 0.016 250);
+  --raised: oklch(0.238 0.018 250);
+  --line: oklch(0.315 0.018 250);
+  --ink: oklch(0.955 0.005 250);
+  --muted: oklch(0.71 0.012 250);
+  --faint: oklch(0.57 0.012 250);
+
+  --accent: oklch(0.78 0.14 187);
+  --accent-strong: oklch(0.86 0.13 187);
+  --accent-soft: oklch(0.78 0.14 187 / 0.14);
+  --on-accent: oklch(0.17 0.02 220);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--line);
+  }
+
+  html {
+    /* Anchored sections must clear the sticky header. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One visible, consistent focus ring everywhere — keyboard users should never
+     have to guess where they are. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+  /* Scroll-reveal. Elements start shifted and transparent; the useReveal
+     composable adds `.is-visible` when they enter the viewport. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.65s var(--ease-out-soft),
+      transform 0.65s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Faint dot grid used behind the hero. Purely decorative. */
+  .dot-grid {
+    background-image: radial-gradient(circle at center, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 75% 55% at 50% 35%, black 20%, transparent 78%);
+  }
+}
+
+/* Respect the OS "reduce motion" setting: no reveal animation, no smooth
+   scroll. Content still shows — it just arrives instantly. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
