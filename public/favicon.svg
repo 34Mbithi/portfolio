@@ -1,0 +1,9 @@
+<!-- TODO: Replace with your own mark. Currently a monogram tile using the
+     site accent colour. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#0f1720" />
+  <path
+    d="M18 44V20h6.4l7.6 13.2L39.6 20H46v24h-6V31.4l-6 10.2h-4l-6-10.2V44z"
+    fill="#2ec8c8"
+  />
+</svg>

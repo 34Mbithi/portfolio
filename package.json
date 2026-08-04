@@ -1,0 +1,30 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal software engineer portfolio — a single-page scrolling site with anchor navigation, built as a portfolio piece in its own right.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/34Mbithi/portfolio.git"
+  },
+  "homepage": "https://github.com/34Mbithi/portfolio#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --build && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --build --force"
+  },
+  "dependencies": {
+    "vue": "^3.5.40"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.1.2",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9",
+    "vite": "^8.2.0",
+    "vue-tsc": "^3.3.9"
+  }
+}

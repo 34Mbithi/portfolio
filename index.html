@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- TODO: replace every meta value below with your real details before launch. -->
+    <title>Your Name — Backend Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio of Your Name, a backend engineer building fast, reliable systems."
+    />
+    <meta name="author" content="Your Name" />
+    <meta name="theme-color" content="#0b0f14" />
+
+    <!-- Open Graph / social sharing. TODO: add a real 1200x630 og-image.png to /public. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Your Name — Backend Engineer" />
+    <meta
+      property="og:description"
+      content="Portfolio of Your Name, a backend engineer building fast, reliable systems."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://your-domain.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // Applies the stored theme before first paint so dark mode never flashes
+      // white on load. Kept inline and tiny — it must run before the bundle.
+      ;(() => {
+        try {
+          const stored = localStorage.getItem('theme')
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark')
+          }
+        } catch {
+          /* localStorage unavailable (private mode) — fall back to light. */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
