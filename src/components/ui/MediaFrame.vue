@@ -12,15 +12,16 @@ withDefaults(
     alt: string
     /** Shown inside the placeholder so you know what to drop in. */
     placeholderHint?: string
+    placeholderTitle?: string
     aspect?: string
   }>(),
-  { aspect: 'aspect-[16/10]' },
+  { aspect: 'aspect-[16/10]', placeholderTitle: 'Visual in progress' },
 )
 </script>
 
 <template>
   <div
-    class="relative overflow-hidden rounded-xl border border-line bg-raised"
+    class="media-frame relative overflow-hidden rounded-xl border border-line bg-raised"
     :class="aspect"
   >
     <img
@@ -29,28 +30,18 @@ withDefaults(
       :alt="alt"
       loading="lazy"
       decoding="async"
-      class="h-full w-full object-cover"
+      class="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-hover)] group-hover:scale-[1.025]"
     />
 
-    <div v-else class="dot-grid flex h-full w-full flex-col items-center justify-center gap-2 p-6">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="h-7 w-7 text-faint"
-        aria-hidden="true"
-      >
-        <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
-        <circle cx="8.75" cy="10" r="1.5" />
-        <path d="m3.5 17 4.75-4.5 4 3.5 3.5-3 4.75 4.5" />
-      </svg>
-
-      <p class="text-center font-mono text-[0.6875rem] leading-relaxed text-faint">
-        {{ placeholderHint ?? 'Screenshot placeholder' }}
-      </p>
+    <div v-else class="media-placeholder flex h-full w-full items-end p-5 sm:p-7">
+      <div class="relative z-10 max-w-xs rounded-lg border border-line bg-surface/85 p-4 backdrop-blur-sm">
+        <p class="font-mono text-[0.6875rem] tracking-[0.15em] text-accent-strong uppercase">
+          {{ placeholderTitle }}
+        </p>
+        <p v-if="placeholderHint" class="mt-2 text-xs leading-relaxed text-faint">
+          {{ placeholderHint }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

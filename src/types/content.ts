@@ -19,7 +19,8 @@ export interface NavItem {
 
 export interface SocialLink {
   label: string
-  href: string
+  /** null keeps launch-incomplete links out of the interface. */
+  href: string | null
   icon: IconName
   /** Set for mailto: and file downloads so we don't add rel="noopener" noise. */
   external?: boolean
@@ -81,6 +82,13 @@ export interface SkillGroup {
   items: string[]
 }
 
+/** A key/value row in the hero side panel. */
+export interface HeroHighlight {
+  /** Rendered small and monospaced — keep it to one or two words. */
+  label: string
+  value: string
+}
+
 export interface HeroContent {
   name: string
   /** One line. This is the single most-read sentence on the site. */
@@ -88,6 +96,11 @@ export interface HeroContent {
   intro: string
   /** Small rotating/static labels above the name. */
   eyebrow: string
+  /**
+   * Fills the right-hand column of the hero on desktop. Three or four rows —
+   * this is a summary card, not a second CV.
+   */
+  highlights: HeroHighlight[]
 }
 
 export interface AboutContent {
@@ -119,6 +132,7 @@ export interface SiteContent {
   contact: ContactContent
   footer: {
     name: string
+    statement: string
     note: string
   }
 }

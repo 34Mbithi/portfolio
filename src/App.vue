@@ -23,9 +23,9 @@ import SkillsSection from '@/components/sections/SkillsSection.vue'
 
   <main id="main">
     <HeroSection />
-    <AboutSection />
     <ProjectsSection />
     <ExperienceSection />
+    <AboutSection />
     <SkillsSection />
     <ContactSection />
   </main>
