@@ -27,29 +27,37 @@ const caseStudySteps = [
 <template>
   <article
     :id="`project-${project.id}`"
+    tabindex="-1"
     :aria-labelledby="`project-${project.id}-title`"
-    class="group relative scroll-mt-28 rounded-2xl border border-line bg-surface p-6 transition-[border-color,box-shadow,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_18px_45px_-24px] hover:shadow-accent/45 sm:p-8 lg:p-10"
+    class="group relative scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-surface transition-[border-color,box-shadow,transform] duration-400 ease-[var(--ease-hover)] hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_24px_70px_-44px_var(--accent)]"
   >
-    <div class="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+    <!-- The narrative column is the wider of the two: the screenshot is
+         supporting evidence, and an even split gives it more room than it
+         earns while cramping the case study text. -->
+    <div
+      class="grid items-stretch xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
+    >
       <!-- Screenshot -->
       <MediaFrame
         :src="project.image.src"
         :alt="project.image.alt"
-        :placeholder-hint="`/public/projects/${project.id}.png`"
-        class="lg:sticky lg:top-28"
-        :class="isReversed() ? 'lg:order-2' : 'lg:order-1'"
+        placeholder-title="Project visual coming soon"
+        placeholder-hint="The case study is complete; a final project screenshot is still needed before launch."
+        aspect="aspect-[16/11] xl:aspect-auto xl:min-h-full"
+        class="rounded-none border-0 border-b xl:border-r xl:border-b-0"
+        :class="isReversed() ? 'xl:order-2' : 'xl:order-1'"
       />
 
       <!-- Narrative -->
-      <div :class="isReversed() ? 'lg:order-1' : 'lg:order-2'">
-        <p class="font-mono text-xs text-faint">
-          {{ String(position + 1).padStart(2, '0') }}
+      <div class="p-5 sm:p-8 lg:p-10 xl:p-12" :class="isReversed() ? 'xl:order-1' : 'xl:order-2'">
+        <p class="font-mono text-[0.6875rem] tracking-[0.16em] text-faint uppercase">
+          Case {{ String(position + 1).padStart(2, '0') }}
         </p>
 
         <h3 :id="`project-${project.id}-title`" class="mt-2 text-title font-semibold text-ink">
           {{ project.title }}
         </h3>
-        <p class="mt-2 text-base leading-relaxed text-muted">{{ project.tagline }}</p>
+        <p class="mt-2 measure text-base leading-relaxed text-muted">{{ project.tagline }}</p>
 
         <!-- Tech stack -->
         <ul class="mt-5 flex flex-wrap gap-2" :aria-label="`${project.title} tech stack`">
@@ -57,18 +65,19 @@ const caseStudySteps = [
         </ul>
 
         <!-- Problem → Solution → Result -->
-        <div class="mt-7 space-y-5 border-l-2 border-line pl-5">
+        <div class="mt-8 grid gap-5 border-t border-line pt-6 lg:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
           <div v-for="step in caseStudySteps" :key="step.key">
             <h4 class="font-mono text-[0.6875rem] tracking-widest text-accent-strong uppercase">
-              {{ step.label }}
+              {{ step.key === 'solution' ? 'Approach' : step.label }}
             </h4>
-            <p class="mt-1.5 text-sm leading-relaxed text-muted">
+            <p class="mt-1.5 measure text-sm leading-relaxed text-muted">
               {{ project.caseStudy[step.key] }}
             </p>
           </div>
         </div>
 
-        <!-- Measurable outcomes -->
+        <!-- Measurable outcomes. Three across needs roughly 480px of card to
+             avoid two-word-per-line labels, so it stays stacked until `sm`. -->
         <dl
           v-if="project.outcomes.length"
           class="mt-7 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-3"
@@ -76,30 +85,32 @@ const caseStudySteps = [
           <div v-for="outcome in project.outcomes" :key="outcome.label" class="bg-raised p-4">
             <dt class="sr-only">{{ outcome.label }}</dt>
             <dd>
-              <span class="block font-mono text-lg font-medium text-accent-strong">
+              <span class="block font-mono text-lg font-medium break-words text-accent-strong">
                 {{ outcome.value }}
               </span>
-              <span class="mt-1 block text-xs leading-snug text-faint">{{ outcome.label }}</span>
+              <span class="mt-1 block text-xs leading-snug text-balance text-faint">
+                {{ outcome.label }}
+              </span>
             </dd>
           </div>
         </dl>
 
         <!-- Links -->
         <div class="mt-7 flex flex-wrap gap-3">
-          <BaseButton v-if="project.demoUrl" :href="project.demoUrl" size="sm" external>
-            Live Demo
-            <IconGlyph name="external" :size="15" />
+          <BaseButton v-if="project.demoUrl" label="Live demo" :href="project.demoUrl" size="sm" external>
+            <template #suffix><IconGlyph name="external" :size="15" class="arrow-nudge" /></template>
           </BaseButton>
 
           <BaseButton
             v-if="project.repoUrl"
+            label="Source code"
             :href="project.repoUrl"
             variant="secondary"
             size="sm"
             external
           >
-            <IconGlyph name="github" :size="15" />
-            GitHub Repo
+            <template #prefix><IconGlyph name="github" :size="15" /></template>
+            <template #suffix><IconGlyph name="external" :size="14" class="arrow-nudge" /></template>
           </BaseButton>
         </div>
       </div>

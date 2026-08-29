@@ -3,7 +3,8 @@
 Personal software engineer portfolio — a single-page scrolling site with anchor
 navigation, built as a portfolio piece in its own right.
 
-All content is currently placeholder. See [Replacing the content](#replacing-the-content).
+The main portfolio content is in place. Employer names, LinkedIn, résumé,
+portrait, and project screenshots still need final assets or factual details.
 
 ## Tech stack
 
@@ -113,7 +114,6 @@ labelled placeholder naming the file it expects, so nothing silently breaks.
 | `resume.pdf`                | Résumé download link                        |
 | `portrait.jpg`              | About section photo                         |
 | `projects/<project-id>.png` | Project screenshots                         |
-| `og-image.png`              | Social share card (1200×630)                |
 | `favicon.svg`               | Browser tab icon (a monogram is in place)   |
 
 After adding an image, point the matching `src` in `content.ts` at it — e.g.
@@ -141,6 +141,23 @@ component.
 Typography uses two families (Inter, JetBrains Mono) loaded from Google Fonts in
 `index.html`, and a fluid `clamp()` scale — headings resize with the viewport
 rather than stepping at breakpoints.
+
+## Motion
+
+Motion is progressive enhancement and is switched off under
+`prefers-reduced-motion: reduce`.
+
+**Scroll reveal** ([`reveal.ts`](src/directives/reveal.ts)) — `v-reveal` fades
+and lifts an element the first time it scrolls into view. Elements crossing the
+threshold together are treated as one group and cascade 70ms apart in document
+order, so a row of cards arrives one after another without any call site
+numbering its own children. Pass a number (`v-reveal="140"`) to set a delay by
+hand; that always wins over the automatic one.
+
+Headings use the same reveal one word at a time, the header settles into place
+one word at a time. Important actions share a CSS-only staggered glyph-roll
+interaction, while project media and directional icons use restrained hover
+movement. There is no animation runtime in the client bundle.
 
 ## Accessibility
 

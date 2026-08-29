@@ -10,15 +10,14 @@ const { projects } = content
 <template>
   <SectionShell
     id="projects"
-    index="02"
-    title="Projects"
-    description="Each one framed as a case study rather than a screenshot — the problem it
-      started from, the approach taken, and what actually changed as a result."
+    index="01"
+    title="Selected Work"
+    description="Four engineering case studies, from authenticated APIs to the interfaces that consume them. Each one shows the constraint, the approach, and the evidence."
   >
-    <template #heading>Selected work</template>
+    <template #heading>Built around real constraints.</template>
 
     <!-- Generous gap: these are the pieces the page exists to show. -->
-    <div class="space-y-8 lg:space-y-12">
+    <div class="space-y-8 lg:space-y-14">
       <div v-for="(project, index) in projects" :key="project.id" v-reveal>
         <ProjectCard :project="project" :position="index" />
       </div>
