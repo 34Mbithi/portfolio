@@ -48,7 +48,7 @@ export const content: SiteContent = {
 
   /* ----------------------------------------------------------------- hero */
   hero: {
-    eyebrow: 'Available for new work',
+    eyebrow: 'Open to full-stack roles',
     name: NAME,
     tagline: 'Full-stack developer building REST APIs and the interfaces on top of them.',
     intro:
@@ -68,9 +68,9 @@ export const content: SiteContent = {
     heading: 'About',
     paragraphs: [
       'I am a software developer trained at Moringa School, with a degree in Business Information Technology from JKUAT. Most of what I build is an API and something that talks to it: routes, models, migrations, and the frontend state that keeps the two honest with each other.',
-      'My first real job was integration support — testing system behaviour against requirements, reproducing issues other people reported, and writing up what was actually wrong. That left a mark on how I write code. I care about validation at the boundary, errors that say what failed, and tests that fail for the right reason.',
+      'My first developer role was integration support — testing system behaviour against requirements, reproducing issues other people reported, and writing up what was actually wrong. That left a mark on how I write code. I care about validation at the boundary, errors that say what failed, and tests that fail for the right reason.',
       'Before that I worked as an ICT technician, which meant Docker, backups, permissions, and downtime with someone waiting on you to fix it. Unglamorous, but it is why I am comfortable in a terminal and why I reach for reproducible environments by default.',
-      'I am currently looking for full-stack or backend work, and I take on code review and AI coding-evaluation projects alongside it — reading unfamiliar code and explaining precisely what it gets wrong is the part of the job I enjoy most.',
+      'Right now I am the only frontend developer on a remote contract with AlienSoft, building in Vue. Next, I am looking for full-stack or backend work, and I take on code review and AI coding-evaluation projects alongside it — reading unfamiliar code and explaining precisely what it gets wrong is the part of the job I enjoy most.',
     ],
     photo: {
       // TODO: Add a professional photo at /public/portrait.jpg and set src to
@@ -191,15 +191,30 @@ export const content: SiteContent = {
   ],
 
   /* ----------------------------------------------------------- experience */
+  // Newest first. Periods must not overlap: Jan–May 2025, Jun–Sep 2025,
+  // Apr 2026–present.
   experience: [
     {
+      id: 'exp-aliensoft',
+      company: 'AlienSoft',
+      role: 'Frontend Developer Intern',
+      period: 'Apr 2026 — Present',
+      location: 'Remote · Contract',
+      current: true,
+      // TODO: add one or two concrete highlights (a feature you shipped, a
+      // problem you solved) when you have them.
+      highlights: [
+        'The only frontend developer on the team, so every frontend concern — from building screens to fixing what breaks in them — is mine to own.',
+        'Build and maintain the client application in Vue.',
+      ],
+    },
+    {
       id: 'exp-integration',
-      // TODO: replace with the real company name.
-      company: 'Employer to confirm',
+      // TODO: replace this description with the company name.
+      company: 'Sitecore CMS integration team',
       role: 'Software Developer Intern — Systems Integration Support',
       period: 'Jun 2025 — Sep 2025',
       location: 'Remote / Nairobi, Kenya',
-      relatedProjectId: 'versioned-product-api',
       highlights: [
         'Supported web system integrations in Sitecore CMS on an Agile/Scrum team, validating system behaviour against written requirements before sign-off.',
         'Ran system testing and validation for the SBMCS Space Common Tactical Database (SCTD) project, where output had to hold up against government compliance standards.',
@@ -209,8 +224,8 @@ export const content: SiteContent = {
     },
     {
       id: 'exp-ict',
-      // TODO: replace with the real company name.
-      company: 'Employer to confirm',
+      // TODO: replace this description with the company name.
+      company: 'IT support & infrastructure',
       role: 'ICT / System Technician',
       period: 'Jan 2025 — May 2025',
       location: 'Nairobi, Kenya',
