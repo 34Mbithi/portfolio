@@ -48,7 +48,7 @@ export const content: SiteContent = {
 
   /* ----------------------------------------------------------------- hero */
   hero: {
-    eyebrow: 'Available for new work',
+    eyebrow: 'Open to full-stack roles',
     name: NAME,
     tagline: 'Full-stack developer building REST APIs and the interfaces on top of them.',
     intro:
@@ -68,9 +68,9 @@ export const content: SiteContent = {
     heading: 'About',
     paragraphs: [
       'I am a software developer trained at Moringa School, with a degree in Business Information Technology from JKUAT. Most of what I build is an API and something that talks to it: routes, models, migrations, and the frontend state that keeps the two honest with each other.',
-      'My first real job was integration support — testing system behaviour against requirements, reproducing issues other people reported, and writing up what was actually wrong. That left a mark on how I write code. I care about validation at the boundary, errors that say what failed, and tests that fail for the right reason.',
+      'My first developer role was integration support — testing system behaviour against requirements, reproducing issues other people reported, and writing up what was actually wrong. That left a mark on how I write code. I care about validation at the boundary, errors that say what failed, and tests that fail for the right reason.',
       'Before that I worked as an ICT technician, which meant Docker, backups, permissions, and downtime with someone waiting on you to fix it. Unglamorous, but it is why I am comfortable in a terminal and why I reach for reproducible environments by default.',
-      'I am currently looking for full-stack or backend work, and I take on code review and AI coding-evaluation projects alongside it — reading unfamiliar code and explaining precisely what it gets wrong is the part of the job I enjoy most.',
+      'Right now I am the only frontend developer on a remote contract with AlienSoft, building in Vue. Next, I am looking for full-stack or backend work, and I take on code review and AI coding-evaluation projects alongside it — reading unfamiliar code and explaining precisely what it gets wrong is the part of the job I enjoy most.',
     ],
     photo: {
       // TODO: Add a professional photo at /public/portrait.jpg and set src to
@@ -103,10 +103,35 @@ export const content: SiteContent = {
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/BACKENDTECHNICALTEST',
       image: {
-        // TODO: Add a screenshot at /public/projects/product-api.png — the
-        // Swagger page or a passing `php artisan test` run both read well.
+        // A screenshot here (e.g. the Swagger page) replaces the code view.
         src: null,
         alt: 'Terminal output of the Pest suite with all product and auth tests passing',
+      },
+      // Copied from routes/api.php and ProductController::index.
+      codeView: {
+        title: 'routes/api.php',
+        blocks: [
+          {
+            label: 'Routes',
+            code: `# public
+POST       /api/v1/auth/login
+
+# auth:sanctum
+POST       /api/v1/auth/logout
+GET        /api/v1/auth/me
+GET        /api/v1/products
+POST       /api/v1/products
+GET        /api/v1/products/{product}
+PUT|PATCH  /api/v1/products/{product}
+DELETE     /api/v1/products/{product}
+POST       /api/v1/products/{product}/thumbnail`,
+          },
+          {
+            label: 'ProductController@index',
+            code: `->allowedSorts(['price', 'stock', 'title', 'rating', 'created_at'])`,
+          },
+        ],
+        source: 'routes/api.php · ProductController.php',
       },
     },
     {
@@ -130,9 +155,9 @@ export const content: SiteContent = {
       demoUrl: 'https://34mbithi.github.io/product-management/',
       repoUrl: 'https://github.com/34Mbithi/product-management',
       image: {
-        // TODO: Add a screenshot at /public/projects/dashboard.png
-        src: null,
-        alt: 'Product list screen with search, sidebar navigation, and row actions',
+        // Captured from the live demo (products screen, sidebar open).
+        src: '/projects/dashboard.webp',
+        alt: 'Products screen of the dashboard: sidebar navigation, a search bar with category and stock filters, and an inventory table showing product names, categories, prices, and stock levels',
       },
     },
     {
@@ -144,21 +169,40 @@ export const content: SiteContent = {
         problem:
           'A blog looks simple until the data model bites. Posts belong to authors, carry many categories, and collect comments — and deleting any one of those three leaves orphaned rows behind if the relationships are declared carelessly.',
         solution:
-          'Modelled it explicitly: a post_category association table for the many-to-many, cascade rules on the author and comment relationships, and ondelete="CASCADE" at the database level rather than trusting the ORM alone. Passwords are hashed through Werkzeug, usernames and emails are validated on the model itself so a bad write fails wherever it originates, and every mutating route is behind @jwt_required.',
+          'Modelled it explicitly: a post_category association table for the many-to-many, cascade rules on the author and comment relationships, and ondelete="CASCADE" at the database level rather than trusting the ORM alone. Passwords are hashed through Werkzeug, usernames and emails are validated on the model itself so a bad write fails wherever it originates, and post, profile, and account writes are behind @jwt_required.',
         result:
           'Four route modules — auth, posts, comments, profile — each stay small enough to read in one sitting. Post listing is paginated from the first commit rather than retrofitted, and seed scripts mean a new contributor gets a populated database in one command.',
       },
       outcomes: [
         { value: '4', label: 'Route modules: auth, posts, comments, profile' },
         { value: '4', label: 'Models with cascade deletes' },
-        { value: 'JWT', label: 'Required on every write path' },
+        { value: 'JWT', label: 'On post, profile, and account writes' },
       ],
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/InkSpaceBackend',
       image: {
-        // TODO: Add a screenshot at /public/projects/inkspace.png
+        // A screenshot of the React client here replaces the code view.
         src: null,
         alt: 'InkSpace post feed showing authored posts with category tags',
+      },
+      // Transcribed from server/models.py.
+      codeView: {
+        title: 'server/models.py',
+        blocks: [
+          {
+            label: 'Schema',
+            code: `users          PK id · username · email · password_hash
+blog_posts     PK id · title · content
+               FK author_id   → users.id       ON DELETE CASCADE
+comments       PK id · content
+               FK post_id     → blog_posts.id  ON DELETE CASCADE
+               FK author_id   → users.id       ON DELETE CASCADE
+categories     PK id · name
+post_category  FK post_id     → blog_posts.id  ON DELETE CASCADE
+               FK category_id → categories.id  ON DELETE CASCADE`,
+          },
+        ],
+        source: 'server/models.py',
       },
     },
     {
@@ -182,24 +226,67 @@ export const content: SiteContent = {
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/lateshow',
       image: {
-        // TODO: Add a screenshot at /public/projects/lateshow.png — a Postman
-        // request showing the 400 response body works well here.
         src: null,
         alt: 'Postman request returning a validation error for an out-of-range rating',
+      },
+      // Request/response from app/routes.py; validator from app/models.py.
+      codeView: {
+        title: 'POST /appearances',
+        blocks: [
+          {
+            label: 'Request',
+            code: `{
+  "rating": 9,
+  "episode_id": 1,
+  "guest_id": 1
+}`,
+          },
+          {
+            label: 'Response',
+            status: { code: 400, text: 'Bad Request' },
+            code: `{
+  "errors": ["validation errors"]
+}`,
+          },
+          {
+            label: 'app/models.py',
+            code: `@db.validates('rating')
+def validate_rating(self, key, value):
+    if value < 1 or value > 5:
+        raise ValueError("Rating must be between 1 and 5.")
+    return value`,
+          },
+        ],
+        source: 'app/routes.py · app/models.py',
       },
     },
   ],
 
   /* ----------------------------------------------------------- experience */
+  // Newest first. Periods must not overlap: Jan–May 2025, Jun–Sep 2025,
+  // Apr 2026–present.
   experience: [
     {
+      id: 'exp-aliensoft',
+      company: 'AlienSoft',
+      role: 'Frontend Developer Intern',
+      period: 'Apr 2026 — Present',
+      location: 'Remote · Contract',
+      current: true,
+      // TODO: add one or two concrete highlights (a feature you shipped, a
+      // problem you solved) when you have them.
+      highlights: [
+        'The only frontend developer on the team, so every frontend concern — from building screens to fixing what breaks in them — is mine to own.',
+        'Build and maintain the client application in Vue.',
+      ],
+    },
+    {
       id: 'exp-integration',
-      // TODO: replace with the real company name.
-      company: 'Employer to confirm',
+      // TODO: replace this description with the company name.
+      company: 'Sitecore CMS integration team',
       role: 'Software Developer Intern — Systems Integration Support',
       period: 'Jun 2025 — Sep 2025',
       location: 'Remote / Nairobi, Kenya',
-      relatedProjectId: 'versioned-product-api',
       highlights: [
         'Supported web system integrations in Sitecore CMS on an Agile/Scrum team, validating system behaviour against written requirements before sign-off.',
         'Ran system testing and validation for the SBMCS Space Common Tactical Database (SCTD) project, where output had to hold up against government compliance standards.',
@@ -209,8 +296,8 @@ export const content: SiteContent = {
     },
     {
       id: 'exp-ict',
-      // TODO: replace with the real company name.
-      company: 'Employer to confirm',
+      // TODO: replace this description with the company name.
+      company: 'IT support & infrastructure',
       role: 'ICT / System Technician',
       period: 'Jan 2025 — May 2025',
       location: 'Nairobi, Kenya',

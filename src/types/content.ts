@@ -46,6 +46,30 @@ export interface ProjectImage {
   alt: string
 }
 
+/** One labelled chunk of a code view, e.g. "Request" then "Response". */
+export interface CodeBlock {
+  label?: string
+  /** HTTP-style status shown beside the label, e.g. { code: 400, text: 'Bad Request' }. */
+  status?: { code: number; text: string }
+  /** Pre-formatted text. Rendered as-is, monospaced, never reflowed. */
+  code: string
+}
+
+/**
+ * A code-native project visual: routes, a request/response pair, a schema.
+ * For API projects this is better evidence than a screenshot of a terminal.
+ *
+ * Copy it from the repository rather than writing it — every line should be
+ * something a reader can find in the code.
+ */
+export interface CodeView {
+  /** Window title: a file path, or an endpoint. */
+  title: string
+  blocks: CodeBlock[]
+  /** Where this comes from, shown as the caption, e.g. "app/routes.py". */
+  source: string
+}
+
 export interface Project {
   id: string
   title: string
@@ -57,7 +81,10 @@ export interface Project {
   /** null hides the button rather than rendering a dead link. */
   demoUrl: string | null
   repoUrl: string | null
+  /** A screenshot. When `src` is set it always wins over `codeView`. */
   image: ProjectImage
+  /** Shown when there is no screenshot. Neither → labelled placeholder. */
+  codeView?: CodeView
 }
 
 export interface ExperienceEntry {

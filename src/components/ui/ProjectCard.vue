@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseButton from '@/components/ui/BaseButton.vue'
 import IconGlyph from '@/components/ui/IconGlyph.vue'
-import MediaFrame from '@/components/ui/MediaFrame.vue'
+import ProjectVisual from '@/components/ui/ProjectVisual.vue'
 import TagChip from '@/components/ui/TagChip.vue'
 import type { Project } from '@/types/content'
 
@@ -37,16 +37,12 @@ const caseStudySteps = [
     <div
       class="grid items-stretch xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
     >
-      <!-- Screenshot -->
-      <MediaFrame
-        :src="project.image.src"
-        :alt="project.image.alt"
-        placeholder-title="Project visual coming soon"
-        placeholder-hint="The case study is complete; a final project screenshot is still needed before launch."
-        aspect="aspect-[16/11] xl:aspect-auto xl:min-h-full"
-        class="rounded-none border-0 border-b xl:border-r xl:border-b-0"
-        :class="isReversed() ? 'xl:order-2' : 'xl:order-1'"
-      />
+      <div
+        class="min-w-0 border-b border-line xl:border-b-0"
+        :class="isReversed() ? 'xl:order-2 xl:border-l' : 'xl:order-1 xl:border-r'"
+      >
+        <ProjectVisual :project="project" />
+      </div>
 
       <!-- Narrative -->
       <div class="p-5 sm:p-8 lg:p-10 xl:p-12" :class="isReversed() ? 'xl:order-1' : 'xl:order-2'">
