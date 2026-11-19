@@ -54,3 +54,6 @@ desktop.ini
 
 # Misc
 *.local
+
+# Local AI-assistant notes (kept on disk, not published)
+PROJECT_CONTEXT.md
