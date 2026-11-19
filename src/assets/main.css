@@ -382,38 +382,31 @@
       var(--raised);
   }
 
-  /* Each character owns a two-row stack containing identical glyphs. Hover
-     shifts exactly one row, so the label resolves to the same word without
-     JavaScript timers, random characters, or any layout movement. */
+  /* Staggered glyph roll on buttons. One span per character: its
+     text-shadow is a copy of the glyph one line below, and the label clips
+     to a single line. Hover lifts each glyph by exactly one line, so the
+     shadow copy lands where the original was — same word, no layout
+     movement, no timers. (Was three spans per character; this trims ~300
+     elements from the page.) */
   .glyph-label {
     display: inline-flex;
     align-items: center;
-    white-space: nowrap;
-  }
-
-  .glyph-cell {
-    display: inline-flex;
     height: 1.25em;
     overflow: hidden;
     line-height: 1.25;
+    white-space: nowrap;
   }
 
-  .glyph-stack {
-    display: flex;
-    flex-direction: column;
-    transform: translateY(0);
+  .glyph {
+    display: inline-block;
+    text-shadow: 0 1.25em currentColor;
     transition: transform 0.48s cubic-bezier(0.22, 0.82, 0.24, 1);
     transition-delay: calc(var(--glyph-index) * 22ms);
   }
 
-  .glyph-stack > span {
-    display: block;
-    height: 1.25em;
-  }
-
   @media (hover: hover) and (pointer: fine) {
-    .glyph-button:hover .glyph-stack {
-      transform: translateY(-50%);
+    .glyph-button:hover .glyph {
+      transform: translateY(-1.25em);
     }
   }
 
@@ -495,7 +488,7 @@
     filter: none;
   }
 
-  .glyph-stack {
+  .glyph {
     transform: none !important;
   }
 

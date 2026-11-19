@@ -71,7 +71,8 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('resize', handleResize, { passive: true })
   window.addEventListener('keydown', handleKeydown)
-  handleScroll()
+  // No initial read: a restored scroll position fires a scroll event, and
+  // reading scrollY during mount forces a layout before first paint.
 })
 
 onBeforeUnmount(() => {

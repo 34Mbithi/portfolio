@@ -27,6 +27,8 @@ function screenshotTitle(): string {
     <WindowFrame v-if="project.image.src" :title="screenshotTitle()">
       <img
         :src="project.image.src"
+        :srcset="project.image.srcset"
+        sizes="(min-width: 1280px) 36rem, calc(100vw - 5rem)"
         :alt="project.image.alt"
         width="1600"
         height="1000"

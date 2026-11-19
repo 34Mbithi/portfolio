@@ -44,6 +44,8 @@ export interface ProjectImage {
   src: string | null
   /** Describe the screenshot's content, not the fact that it is a screenshot. */
   alt: string
+  /** Optional smaller widths, e.g. '/a-800.webp 800w, /a.webp 1600w'. */
+  srcset?: string
 }
 
 /** One labelled chunk of a code view, e.g. "Request" then "Response". */

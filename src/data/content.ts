@@ -155,6 +155,7 @@ POST       /api/v1/products/{product}/thumbnail`,
       image: {
         // Captured from the live demo (products screen, sidebar open).
         src: '/projects/dashboard.webp',
+        srcset: '/projects/dashboard-800.webp 800w, /projects/dashboard-1200.webp 1200w, /projects/dashboard.webp 1600w',
         alt: 'Products screen of the dashboard: sidebar navigation, a search bar with category and stock filters, and an inventory table showing product names, categories, prices, and stock levels',
       },
     },

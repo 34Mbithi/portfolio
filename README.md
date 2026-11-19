@@ -17,8 +17,10 @@ portrait, and project screenshots still need final assets or factual details.
 | Hosting    | Vercel (zero-config static build)                  |
 
 No UI kit, no icon package, no state library, no third-party requests. The
-production bundle is ~44 kB of JavaScript and ~10 kB of CSS, gzipped, plus
-self-hosted Latin font subsets.
+production bundle is ~47 kB of JavaScript and ~10 kB of CSS, gzipped, plus
+self-hosted Latin font subsets. Lighthouse (production build, local): desktop
+100 across the board; mobile 95–98 performance, 100 accessibility, best
+practices and SEO.
 
 ## Getting started
 
@@ -114,12 +116,18 @@ labelled placeholder naming the file it expects, so nothing silently breaks.
 | --------------------------- | -------------------------------------------- |
 | `resume.pdf`                | Résumé download link                        |
 | `portrait.jpg`              | About section photo                         |
-| `projects/<project-id>.png` | Project screenshots                         |
+| `projects/<name>.webp`      | Project screenshots (optional — see below)  |
 | `favicon.svg`               | Browser tab icon (a monogram is in place)   |
 | `og-image.jpg`              | Link-preview card, 1200×630                 |
 
 After adding an image, point the matching `src` in `content.ts` at it — e.g.
 `src: '/portrait.jpg'`.
+
+**Project visuals** are chosen in this order: a screenshot (`image.src`, shown
+in a browser-style frame, with optional `srcset`), else a `codeView` (routes,
+a request/response pair, a schema — shown in an editor-style frame), else the
+labelled placeholder. Copy code views from the repository verbatim; they are
+evidence, so every line should be findable in the code.
 
 ### Also update
 
