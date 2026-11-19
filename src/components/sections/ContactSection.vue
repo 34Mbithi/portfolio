@@ -47,18 +47,18 @@ onBeforeUnmount(() => window.clearTimeout(resetTimer))
   <SectionShell id="contact" index="05" title="Contact">
     <template #heading>{{ contact.heading }}</template>
 
-    <div class="contact-panel relative overflow-hidden rounded-2xl border border-line bg-ink px-5 py-8 text-canvas sm:px-8 sm:py-10 lg:px-12 lg:py-14">
+    <div class="contact-panel relative overflow-hidden rounded-2xl border border-line bg-footer px-5 py-8 text-footer-ink sm:px-8 sm:py-10 lg:px-12 lg:py-14">
       <div class="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div class="max-w-3xl">
           <p v-reveal class="font-mono text-xs tracking-[0.14em] text-accent uppercase">Open to relevant opportunities</p>
           <h3 v-reveal="60" class="mt-5 text-headline font-semibold text-balance">Have something worth building?</h3>
-          <p v-reveal="120" class="mt-5 max-w-2xl text-base leading-7 text-canvas/70">{{ contact.message }}</p>
+          <p v-reveal="120" class="mt-5 max-w-2xl text-base leading-7 text-footer-ink/75">{{ contact.message }}</p>
 
           <div v-reveal="180" class="mt-8 flex flex-wrap gap-3">
             <BaseButton label="Send an email" :href="`mailto:${contact.email}`" variant="neutral" size="lg">
               <template #prefix><IconGlyph name="email" :size="17" /></template>
             </BaseButton>
-            <BaseButton label="Copy email" variant="ghost" size="lg" class="contact-ghost" @click="copyEmail" />
+            <BaseButton label="Copy email" variant="inverse" size="lg" @click="copyEmail" />
           </div>
 
           <p class="sr-only" role="status" aria-live="polite">{{ copyStatus }}</p>
@@ -66,9 +66,9 @@ onBeforeUnmount(() => window.clearTimeout(resetTimer))
         </div>
 
         <div v-reveal="220">
-          <p class="font-mono text-xs leading-relaxed text-canvas/55">{{ contact.availability }}</p>
+          <p class="font-mono text-xs leading-relaxed text-footer-ink/65">{{ contact.availability }}</p>
           <div class="contact-socials mt-4">
-            <SocialLinks :links="visibleSocial" />
+            <SocialLinks :links="visibleSocial" tone="inverse" />
           </div>
         </div>
       </div>

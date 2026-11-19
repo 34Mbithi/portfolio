@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-type Variant = 'primary' | 'secondary' | 'neutral' | 'ghost'
+/** `neutral` and `inverse` are for dark panels (contact card, footer) that stay dark in both themes. */
+type Variant = 'primary' | 'secondary' | 'neutral' | 'ghost' | 'inverse'
 type Size = 'lg' | 'md' | 'sm'
 
 const props = withDefaults(
@@ -21,10 +22,11 @@ const tag = computed(() => (props.href ? 'a' : 'button'))
 const characters = computed(() => Array.from(props.label))
 
 const variantClass: Record<Variant, string> = {
-  primary: 'border-accent bg-accent text-on-accent hover:border-accent-strong hover:bg-accent-strong',
+  primary: 'border-accent-fill bg-accent-fill text-on-accent hover:border-accent-fill-hover hover:bg-accent-fill-hover',
   secondary: 'border-line bg-surface text-ink hover:border-accent/70 hover:bg-raised',
   neutral: 'border-white/80 bg-white text-slate-950 hover:border-white hover:bg-slate-100',
   ghost: 'border-transparent bg-transparent text-muted hover:border-line hover:bg-raised hover:text-ink',
+  inverse: 'border-white/25 bg-transparent text-white/85 hover:border-white/50 hover:bg-white/10 hover:text-white',
 }
 
 const sizeClass: Record<Size, string> = {

@@ -9,8 +9,10 @@ const props = withDefaults(
     links: readonly SocialLink[]
     /** `labelled` shows text beside each icon; `compact` is icon-only. */
     variant?: 'labelled' | 'compact'
+    /** `inverse` is for panels that stay dark in both themes. */
+    tone?: 'default' | 'inverse'
   }>(),
-  { variant: 'labelled' },
+  { variant: 'labelled', tone: 'default' },
 )
 
 const visibleLinks = computed(() => props.links.filter((link) => Boolean(link.href)))
@@ -25,8 +27,13 @@ const visibleLinks = computed(() => props.links.filter((link) => Boolean(link.hr
         :rel="link.external ? 'noopener noreferrer' : undefined"
         :download="link.icon === 'resume' ? '' : undefined"
         :aria-label="`${link.label}${link.external ? ' (opens in a new tab)' : ''}`"
-        class="inline-flex items-center gap-2 rounded-lg border border-transparent text-muted transition-colors duration-200 hover:border-line hover:bg-raised hover:text-ink"
-        :class="variant === 'compact' ? 'p-2.5' : 'px-3 py-2 text-sm font-medium'"
+        class="inline-flex min-h-10 items-center gap-2 rounded-lg border border-transparent transition-colors duration-200"
+        :class="[
+          variant === 'compact' ? 'p-2.5' : 'px-3 py-2 text-sm font-medium',
+          tone === 'inverse'
+            ? 'text-white/75 hover:border-white/20 hover:bg-white/10 hover:text-white'
+            : 'text-muted hover:border-line hover:bg-raised hover:text-ink',
+        ]"
       >
         <IconGlyph :name="link.icon" :size="variant === 'compact' ? 20 : 17" />
         <span v-if="variant === 'labelled'">{{ link.label }}</span>
