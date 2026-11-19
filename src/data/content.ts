@@ -53,12 +53,10 @@ export const content: SiteContent = {
     tagline: 'Full-stack developer building REST APIs and the interfaces on top of them.',
     intro:
       'I work across the stack — Laravel and Flask on the server, Vue and React in the browser — with most of my attention on the seam between them: request validation, auth, and the response shapes a frontend actually has to consume.',
-    // Fills the hero's right-hand column on desktop; stacks below the intro on
-    // mobile. Keep the values short — they are set on one line each.
+    // Rows under the request demo in the hero panel. The demo already shows
+    // the stack, so these carry only what it cannot. Keep values to one line.
     highlights: [
       { label: 'Based in', value: 'Nairobi, Kenya · Remote-friendly' },
-      { label: 'Server', value: 'Laravel · Flask · REST APIs' },
-      { label: 'Client', value: 'Vue 3 · React · Tailwind' },
       { label: 'Looking for', value: 'Full-stack & backend roles' },
     ],
   },

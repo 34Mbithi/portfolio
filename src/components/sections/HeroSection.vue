@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ApiFlowDemo from '@/components/ui/ApiFlowDemo.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import IconGlyph from '@/components/ui/IconGlyph.vue'
 import { vReveal, vRevealText } from '@/directives/reveal'
@@ -21,7 +22,7 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
     </div>
 
     <div class="container-page flex min-h-[min(54rem,calc(100svh-4rem))] items-center py-10 sm:py-14 lg:py-16">
-      <div class="grid w-full items-center gap-12 xl:grid-cols-[minmax(0,1.32fr)_minmax(18rem,0.68fr)] xl:gap-20 2xl:gap-24">
+      <div class="grid w-full grid-cols-[minmax(0,1fr)] items-center gap-12 xl:grid-cols-[minmax(0,1.32fr)_minmax(18rem,0.68fr)] xl:gap-20 2xl:gap-24">
         <div class="max-w-4xl">
           <div v-reveal class="flex flex-wrap items-center gap-x-4 gap-y-3">
             <p class="inline-flex items-center gap-2 font-mono text-xs font-medium tracking-[0.08em] text-accent-strong uppercase">
@@ -63,7 +64,7 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
           </div>
         </div>
 
-        <aside v-reveal="390" aria-label="Engineering profile" class="max-w-xl xl:max-w-[24rem] xl:justify-self-end">
+        <aside v-reveal="390" aria-label="Engineering profile" class="min-w-0 max-w-xl xl:max-w-[24rem] xl:justify-self-end">
           <div class="overflow-hidden rounded-2xl border border-line bg-surface/88 shadow-[0_24px_80px_-52px_var(--accent)] backdrop-blur-sm">
             <div class="flex items-center justify-between border-b border-line px-5 py-4">
               <p class="font-mono text-[0.6875rem] tracking-[0.16em] text-faint uppercase">Engineering profile</p>
@@ -71,13 +72,7 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
             </div>
 
             <div class="px-5 py-6 sm:px-6">
-              <div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2" aria-label="Frontend connected to APIs and databases">
-                <div class="tech-node"><span>Client</span><strong>Vue / React</strong></div>
-                <span class="text-faint" aria-hidden="true">→</span>
-                <div class="tech-node"><span>API</span><strong>Laravel / Flask</strong></div>
-                <span class="text-faint" aria-hidden="true">→</span>
-                <div class="tech-node"><span>Data</span><strong>SQL</strong></div>
-              </div>
+              <ApiFlowDemo />
 
               <dl class="mt-6 divide-y divide-line border-y border-line">
                 <div v-for="item in hero.highlights" :key="item.label" class="grid gap-1 py-3 sm:grid-cols-[6.5rem_1fr] sm:gap-3">

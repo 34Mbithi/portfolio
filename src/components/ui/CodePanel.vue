@@ -3,51 +3,15 @@ import { computed } from 'vue'
 
 import WindowFrame from '@/components/ui/WindowFrame.vue'
 import type { CodeView } from '@/types/content'
+import { tokenize, type Tone } from '@/utils/highlight'
 
-/**
- * Renders a CodeView as an editor-style window.
- *
- * Highlighting is a handful of regex rules producing plain spans — no
- * v-html, no highlighter dependency. It only needs to cover JSON bodies,
- * route tables, and schema sketches.
- */
+/** Renders a CodeView as an editor-style window. */
 const props = defineProps<{ view: CodeView }>()
-
-type Tone = 'plain' | 'string' | 'number' | 'method' | 'keyword' | 'comment' | 'punct'
-interface Token {
-  text: string
-  tone: Tone
-}
-
-// Order matters: earlier alternatives win at the same position.
-const RULES: [RegExp, Tone][] = [
-  [/#.*$/, 'comment'],
-  [/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/, 'string'],
-  [/\b(?:GET|POST|PUT|PATCH|DELETE)\b/, 'method'],
-  [/\b(?:ON DELETE CASCADE|auth:sanctum|PK|FK)\b|→/, 'keyword'],
-  [/-?\b\d+(?:\.\d+)?\b/, 'number'],
-  [/[{}[\],:]/, 'punct'],
-]
-const MASTER = new RegExp(RULES.map(([re]) => `(${re.source})`).join('|'), 'gu')
-
-function tokenize(line: string): Token[] {
-  const out: Token[] = []
-  let last = 0
-  for (const match of line.matchAll(MASTER)) {
-    const index = match.index ?? 0
-    if (index > last) out.push({ text: line.slice(last, index), tone: 'plain' })
-    const group = match.slice(1).findIndex((g) => g !== undefined)
-    out.push({ text: match[0], tone: RULES[group]?.[1] ?? 'plain' })
-    last = index + match[0].length
-  }
-  if (last < line.length) out.push({ text: line.slice(last), tone: 'plain' })
-  return out
-}
 
 const blocks = computed(() =>
   props.view.blocks.map((block) => ({
     ...block,
-    lines: block.code.replace(/\n$/, '').split('\n').map(tokenize),
+    lines: tokenize(block.code),
   })),
 )
 

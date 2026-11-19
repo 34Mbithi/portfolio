@@ -299,6 +299,55 @@
     color: var(--ink);
   }
 
+  /* Hero request demo (ApiFlowDemo.vue). States are data attributes so the
+     component only flips values; every transition lives here. */
+  .api-node {
+    transition:
+      border-color 0.3s var(--ease-out-soft),
+      background-color 0.3s var(--ease-out-soft),
+      box-shadow 0.3s var(--ease-out-soft);
+  }
+
+  .api-node[data-state='visited'] {
+    border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
+  }
+
+  .api-node[data-state='current'] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, transparent);
+  }
+
+  .api-arrow {
+    display: inline-block;
+    transition:
+      color 0.3s var(--ease-out-soft),
+      transform 0.3s var(--ease-out-soft);
+  }
+
+  .api-arrow[data-on='true'] {
+    color: var(--accent-strong);
+    transform: translateX(2px);
+  }
+
+  /* Keeps its space while hidden, so the panel never jumps when it lands. */
+  .api-response {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.45s var(--ease-out-soft),
+      transform 0.45s var(--ease-out-soft);
+  }
+
+  .api-response[data-on='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .api-caret {
+    animation: caret-blink 1s steps(2, start) infinite;
+  }
+
   .media-placeholder {
     position: relative;
     isolation: isolate;
@@ -410,6 +459,12 @@
   }
 }
 
+@keyframes caret-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 @keyframes current-pulse {
   70%,
   100% {
@@ -442,6 +497,11 @@
 
   .glyph-stack {
     transform: none !important;
+  }
+
+  .api-response {
+    opacity: 1;
+    transform: none;
   }
 }
 
