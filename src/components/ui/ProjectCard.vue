@@ -29,7 +29,7 @@ const caseStudySteps = [
     :id="`project-${project.id}`"
     tabindex="-1"
     :aria-labelledby="`project-${project.id}-title`"
-    class="group relative scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-surface transition-[border-color,box-shadow,transform] duration-400 ease-[var(--ease-hover)] hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_24px_70px_-44px_var(--accent)]"
+    class="relative scroll-mt-28 overflow-hidden rounded-2xl border border-line bg-surface"
   >
     <!-- The narrative column is the wider of the two: the screenshot is
          supporting evidence, and an even split gives it more room than it

@@ -52,7 +52,7 @@ export const content: SiteContent = {
     name: NAME,
     tagline: 'Full-stack developer building REST APIs and the interfaces on top of them.',
     intro:
-      'I work across the stack — Laravel and Flask on the server, Vue and React in the browser — with most of my attention on the seam between them: request validation, auth, and the response shapes a frontend actually has to consume. Based in Nairobi, open to remote.',
+      'I work across the stack — Laravel and Flask on the server, Vue and React in the browser — with most of my attention on the seam between them: request validation, auth, and the response shapes a frontend actually has to consume.',
     // Fills the hero's right-hand column on desktop; stacks below the intro on
     // mobile. Keep the values short — they are set on one line each.
     highlights: [
@@ -277,7 +277,7 @@ export const content: SiteContent = {
     message:
       'I am looking for full-stack and backend developer roles, and I take on code review and AI coding-evaluation work alongside them. If you have an API that needs building or code that needs a second pair of eyes, email is the fastest way to reach me — I reply to everything.',
     email: EMAIL,
-    availability: 'Open to new opportunities · Remote or Nairobi, Kenya',
+    availability: 'Remote, or in person in Nairobi, Kenya',
   },
 
   /* --------------------------------------------------------------- footer */

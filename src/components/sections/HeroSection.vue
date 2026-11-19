@@ -31,15 +31,13 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
               </span>
               {{ hero.eyebrow }}
             </p>
-            <span class="hidden h-px w-8 bg-line sm:block" aria-hidden="true" />
-            <p class="font-mono text-xs text-faint">Nairobi, Kenya · Remote</p>
           </div>
 
-          <p v-reveal="50" class="mt-6 text-sm font-semibold tracking-[0.16em] text-muted uppercase">
+          <p v-reveal="50" class="mt-5 text-base font-semibold tracking-[0.12em] text-ink uppercase sm:text-lg">
             {{ hero.name }}
           </p>
 
-          <h1 id="hero-heading" v-reveal-text="90" class="mt-4 text-display font-semibold text-balance text-ink">
+          <h1 id="hero-heading" v-reveal-text="90" class="mt-3 text-display font-semibold text-balance text-ink">
             {{ hero.tagline }}
           </h1>
 

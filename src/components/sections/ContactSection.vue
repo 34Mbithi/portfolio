@@ -9,7 +9,8 @@ import { vReveal } from '@/directives/reveal'
 import { content } from '@/data/content'
 
 const { contact } = content
-const visibleSocial = content.social.filter((link) => link.href)
+// Email is already the primary button; repeating it as a social link is noise.
+const visibleSocial = content.social.filter((link) => link.href && link.icon !== 'email')
 const copyStatus = ref('')
 let resetTimer = 0
 
@@ -50,11 +51,9 @@ onBeforeUnmount(() => window.clearTimeout(resetTimer))
     <div class="contact-panel relative overflow-hidden rounded-2xl border border-line bg-footer px-5 py-8 text-footer-ink sm:px-8 sm:py-10 lg:px-12 lg:py-14">
       <div class="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div class="max-w-3xl">
-          <p v-reveal class="font-mono text-xs tracking-[0.14em] text-accent uppercase">Open to relevant opportunities</p>
-          <h3 v-reveal="60" class="mt-5 text-headline font-semibold text-balance">Have something worth building?</h3>
-          <p v-reveal="120" class="mt-5 max-w-2xl text-base leading-7 text-footer-ink/75">{{ contact.message }}</p>
+          <p v-reveal class="max-w-2xl text-lg leading-8 text-footer-ink/85 sm:text-xl sm:leading-9">{{ contact.message }}</p>
 
-          <div v-reveal="180" class="mt-8 flex flex-wrap gap-3">
+          <div v-reveal="120" class="mt-8 flex flex-wrap gap-3">
             <BaseButton label="Send an email" :href="`mailto:${contact.email}`" variant="neutral" size="lg">
               <template #prefix><IconGlyph name="email" :size="17" /></template>
             </BaseButton>
@@ -65,7 +64,7 @@ onBeforeUnmount(() => window.clearTimeout(resetTimer))
           <p v-if="copyStatus" class="mt-3 font-mono text-xs text-accent" aria-hidden="true">{{ copyStatus }}</p>
         </div>
 
-        <div v-reveal="220">
+        <div v-reveal="180">
           <p class="font-mono text-xs leading-relaxed text-footer-ink/65">{{ contact.availability }}</p>
           <div class="contact-socials mt-4">
             <SocialLinks :links="visibleSocial" tone="inverse" />

@@ -27,7 +27,7 @@
   /* Fluid display scale — no media queries needed for headline sizing.
      The svh term caps it on short, wide screens (1366×768 laptops) so the
      hero's call-to-action still lands above the fold. */
-  --text-display: clamp(2.75rem, min(1.6rem + 5vw, 1rem + 7svh), 5.25rem);
+  --text-display: clamp(2.75rem, min(1.6rem + 5vw, 1rem + 6.6svh), 5.25rem);
   --text-display--line-height: 1.02;
   --text-display--letter-spacing: -0.035em;
 
