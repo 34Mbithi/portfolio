@@ -20,8 +20,8 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
       <div class="hero-glow absolute inset-0" />
     </div>
 
-    <div class="container-page flex min-h-[min(54rem,calc(100svh-4rem))] items-center py-16 sm:py-20 lg:py-24">
-      <div class="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1.32fr)_minmax(18rem,0.68fr)] lg:gap-16 xl:gap-24">
+    <div class="container-page flex min-h-[min(54rem,calc(100svh-4rem))] items-center py-10 sm:py-14 lg:py-16">
+      <div class="grid w-full items-center gap-12 xl:grid-cols-[minmax(0,1.32fr)_minmax(18rem,0.68fr)] xl:gap-20 2xl:gap-24">
         <div class="max-w-4xl">
           <div v-reveal class="flex flex-wrap items-center gap-x-4 gap-y-3">
             <p class="inline-flex items-center gap-2 font-mono text-xs font-medium tracking-[0.08em] text-accent-strong uppercase">
@@ -35,7 +35,7 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
             <p class="font-mono text-xs text-faint">Nairobi, Kenya · Remote</p>
           </div>
 
-          <p v-reveal="50" class="mt-8 text-sm font-semibold tracking-[0.16em] text-muted uppercase">
+          <p v-reveal="50" class="mt-6 text-sm font-semibold tracking-[0.16em] text-muted uppercase">
             {{ hero.name }}
           </p>
 
@@ -43,11 +43,11 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
             {{ hero.tagline }}
           </h1>
 
-          <p v-reveal="250" class="mt-7 measure-tight text-base leading-7 text-muted sm:text-lg sm:leading-8">
+          <p v-reveal="250" class="mt-6 measure-tight text-base leading-7 text-muted sm:text-lg sm:leading-8">
             {{ hero.intro }}
           </p>
 
-          <div v-reveal="330" class="mt-9 flex flex-wrap items-center gap-3">
+          <div v-reveal="330" class="mt-8 flex flex-wrap items-center gap-3">
             <BaseButton label="View my work" size="lg" @click="scrollToSection('projects')">
               <template #suffix><span class="arrow-nudge" aria-hidden="true">↓</span></template>
             </BaseButton>
@@ -65,7 +65,7 @@ const github = content.social.find((link) => link.icon === 'github' && link.href
           </div>
         </div>
 
-        <aside v-reveal="390" aria-label="Engineering profile" class="lg:justify-self-end lg:max-w-[24rem]">
+        <aside v-reveal="390" aria-label="Engineering profile" class="max-w-xl xl:max-w-[24rem] xl:justify-self-end">
           <div class="overflow-hidden rounded-2xl border border-line bg-surface/88 shadow-[0_24px_80px_-52px_var(--accent)] backdrop-blur-sm">
             <div class="flex items-center justify-between border-b border-line px-5 py-4">
               <p class="font-mono text-[0.6875rem] tracking-[0.16em] text-faint uppercase">Engineering profile</p>
