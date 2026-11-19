@@ -94,7 +94,7 @@ onBeforeUnmount(() => {
         @click.prevent="scrollToSection('top')"
       >
         <span class="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-[0.625rem] tracking-wider" aria-hidden="true">ME</span>
-        <span>{{ content.footer.name }}</span><span class="text-accent" aria-hidden="true">.</span>
+        <span>{{ content.footer.name }}<span class="text-accent" aria-hidden="true">.</span></span>
       </a>
 
       <div class="flex items-center gap-1.5">
