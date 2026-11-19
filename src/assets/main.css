@@ -324,6 +324,15 @@
     inset: 22% 21% 15% 12%;
   }
 
+  /* Backdrop behind a project's code window: the same accent wash as the
+     placeholder, minus the wireframe, so the window is the focus. */
+  .code-stage {
+    background:
+      radial-gradient(circle at 80% 15%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 45%),
+      radial-gradient(circle at 10% 95%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 40%),
+      var(--raised);
+  }
+
   /* Each character owns a two-row stack containing identical glyphs. Hover
      shifts exactly one row, so the label resolves to the same word without
      JavaScript timers, random characters, or any layout movement. */

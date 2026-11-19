@@ -103,10 +103,35 @@ export const content: SiteContent = {
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/BACKENDTECHNICALTEST',
       image: {
-        // TODO: Add a screenshot at /public/projects/product-api.png — the
-        // Swagger page or a passing `php artisan test` run both read well.
+        // A screenshot here (e.g. the Swagger page) replaces the code view.
         src: null,
         alt: 'Terminal output of the Pest suite with all product and auth tests passing',
+      },
+      // Copied from routes/api.php and ProductController::index.
+      codeView: {
+        title: 'routes/api.php',
+        blocks: [
+          {
+            label: 'Routes',
+            code: `# public
+POST       /api/v1/auth/login
+
+# auth:sanctum
+POST       /api/v1/auth/logout
+GET        /api/v1/auth/me
+GET        /api/v1/products
+POST       /api/v1/products
+GET        /api/v1/products/{product}
+PUT|PATCH  /api/v1/products/{product}
+DELETE     /api/v1/products/{product}
+POST       /api/v1/products/{product}/thumbnail`,
+          },
+          {
+            label: 'ProductController@index',
+            code: `->allowedSorts(['price', 'stock', 'title', 'rating', 'created_at'])`,
+          },
+        ],
+        source: 'routes/api.php · ProductController.php',
       },
     },
     {
@@ -130,9 +155,9 @@ export const content: SiteContent = {
       demoUrl: 'https://34mbithi.github.io/product-management/',
       repoUrl: 'https://github.com/34Mbithi/product-management',
       image: {
-        // TODO: Add a screenshot at /public/projects/dashboard.png
-        src: null,
-        alt: 'Product list screen with search, sidebar navigation, and row actions',
+        // Captured from the live demo (products screen, sidebar open).
+        src: '/projects/dashboard.webp',
+        alt: 'Products screen of the dashboard: sidebar navigation, a search bar with category and stock filters, and an inventory table showing product names, categories, prices, and stock levels',
       },
     },
     {
@@ -144,21 +169,40 @@ export const content: SiteContent = {
         problem:
           'A blog looks simple until the data model bites. Posts belong to authors, carry many categories, and collect comments — and deleting any one of those three leaves orphaned rows behind if the relationships are declared carelessly.',
         solution:
-          'Modelled it explicitly: a post_category association table for the many-to-many, cascade rules on the author and comment relationships, and ondelete="CASCADE" at the database level rather than trusting the ORM alone. Passwords are hashed through Werkzeug, usernames and emails are validated on the model itself so a bad write fails wherever it originates, and every mutating route is behind @jwt_required.',
+          'Modelled it explicitly: a post_category association table for the many-to-many, cascade rules on the author and comment relationships, and ondelete="CASCADE" at the database level rather than trusting the ORM alone. Passwords are hashed through Werkzeug, usernames and emails are validated on the model itself so a bad write fails wherever it originates, and post, profile, and account writes are behind @jwt_required.',
         result:
           'Four route modules — auth, posts, comments, profile — each stay small enough to read in one sitting. Post listing is paginated from the first commit rather than retrofitted, and seed scripts mean a new contributor gets a populated database in one command.',
       },
       outcomes: [
         { value: '4', label: 'Route modules: auth, posts, comments, profile' },
         { value: '4', label: 'Models with cascade deletes' },
-        { value: 'JWT', label: 'Required on every write path' },
+        { value: 'JWT', label: 'On post, profile, and account writes' },
       ],
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/InkSpaceBackend',
       image: {
-        // TODO: Add a screenshot at /public/projects/inkspace.png
+        // A screenshot of the React client here replaces the code view.
         src: null,
         alt: 'InkSpace post feed showing authored posts with category tags',
+      },
+      // Transcribed from server/models.py.
+      codeView: {
+        title: 'server/models.py',
+        blocks: [
+          {
+            label: 'Schema',
+            code: `users          PK id · username · email · password_hash
+blog_posts     PK id · title · content
+               FK author_id   → users.id       ON DELETE CASCADE
+comments       PK id · content
+               FK post_id     → blog_posts.id  ON DELETE CASCADE
+               FK author_id   → users.id       ON DELETE CASCADE
+categories     PK id · name
+post_category  FK post_id     → blog_posts.id  ON DELETE CASCADE
+               FK category_id → categories.id  ON DELETE CASCADE`,
+          },
+        ],
+        source: 'server/models.py',
       },
     },
     {
@@ -182,10 +226,38 @@ export const content: SiteContent = {
       demoUrl: null,
       repoUrl: 'https://github.com/34Mbithi/lateshow',
       image: {
-        // TODO: Add a screenshot at /public/projects/lateshow.png — a Postman
-        // request showing the 400 response body works well here.
         src: null,
         alt: 'Postman request returning a validation error for an out-of-range rating',
+      },
+      // Request/response from app/routes.py; validator from app/models.py.
+      codeView: {
+        title: 'POST /appearances',
+        blocks: [
+          {
+            label: 'Request',
+            code: `{
+  "rating": 9,
+  "episode_id": 1,
+  "guest_id": 1
+}`,
+          },
+          {
+            label: 'Response',
+            status: { code: 400, text: 'Bad Request' },
+            code: `{
+  "errors": ["validation errors"]
+}`,
+          },
+          {
+            label: 'app/models.py',
+            code: `@db.validates('rating')
+def validate_rating(self, key, value):
+    if value < 1 or value > 5:
+        raise ValueError("Rating must be between 1 and 5.")
+    return value`,
+          },
+        ],
+        source: 'app/routes.py · app/models.py',
       },
     },
   ],
