@@ -57,14 +57,9 @@ const sizeClass: Record<Size, string> = {
       <span
         v-for="(character, index) in characters"
         :key="`${character}-${index}`"
-        class="glyph-cell"
+        class="glyph"
         :style="{ '--glyph-index': index }"
-      >
-        <span class="glyph-stack">
-          <span>{{ character === ' ' ? '\u00a0' : character }}</span>
-          <span>{{ character === ' ' ? '\u00a0' : character }}</span>
-        </span>
-      </span>
+      >{{ character === ' ' ? '\u00a0' : character }}</span>
     </span>
 
     <slot name="suffix" />

@@ -54,8 +54,10 @@ export function useScrollSpy(sectionIds: readonly string[]) {
       if (el) observer.observe(el)
     }
 
+    // No initial call: activeId already starts null, and a restored scroll
+    // position fires a scroll event anyway. Reading scrollHeight during mount
+    // would force a synchronous layout of the whole page before first paint.
     window.addEventListener('scroll', handleScrollEdge, { passive: true })
-    handleScrollEdge()
   })
 
   onBeforeUnmount(() => {
