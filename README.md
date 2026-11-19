@@ -16,8 +16,9 @@ portrait, and project screenshots still need final assets or factual details.
 | Styling    | Tailwind CSS v4 (CSS-first config, no JS config)   |
 | Hosting    | Vercel (zero-config static build)                  |
 
-No UI kit, no icon package, no state library. The production bundle is
-~39 kB of JavaScript and ~6 kB of CSS, gzipped.
+No UI kit, no icon package, no state library, no third-party requests. The
+production bundle is ~44 kB of JavaScript and ~10 kB of CSS, gzipped, plus
+self-hosted Latin font subsets.
 
 ## Getting started
 
@@ -92,11 +93,11 @@ placeholder.
 Start with the constants at the top of that file:
 
 ```ts
-const NAME = 'Your Name'
-const GITHUB_URL = 'https://github.com/your-handle'
-const LINKEDIN_URL = 'https://linkedin.com/in/your-handle'
-const EMAIL = 'you@example.com'
-const RESUME_URL = '/resume.pdf'
+const NAME = 'Mbithi Evans'
+const GITHUB_URL = 'https://github.com/34Mbithi'
+const LINKEDIN_URL = null // a link set to null is hidden everywhere
+const EMAIL = '…'
+const RESUME_URL = null // set to '/resume.pdf' once public/resume.pdf exists
 ```
 
 Then work down through `hero`, `about`, `projects`, `experience`, `skills`, and
@@ -115,6 +116,7 @@ labelled placeholder naming the file it expects, so nothing silently breaks.
 | `portrait.jpg`              | About section photo                         |
 | `projects/<project-id>.png` | Project screenshots                         |
 | `favicon.svg`               | Browser tab icon (a monogram is in place)   |
+| `og-image.jpg`              | Link-preview card, 1200×630                 |
 
 After adding an image, point the matching `src` in `content.ts` at it — e.g.
 `src: '/portrait.jpg'`.
@@ -124,6 +126,7 @@ After adding an image, point the matching `src` in `content.ts` at it — e.g.
 - **`index.html`** — `<title>`, meta description, author, and Open Graph tags.
   These are what search results and link previews show; they are not wired to
   `content.ts` because they must exist in the HTML before JavaScript runs.
+  `%SITE_URL%` in that file is filled in at build time — see *Deploying*.
 
 ## Design system
 
@@ -138,9 +141,16 @@ Tailwind names in an `@theme inline` block. That indirection is what lets
 `bg-surface` work correctly in both themes without a single `dark:` class in any
 component.
 
-Typography uses two families (Inter, JetBrains Mono) loaded from Google Fonts in
-`index.html`, and a fluid `clamp()` scale — headings resize with the viewport
-rather than stepping at breakpoints.
+Typography uses two self-hosted families — Inter (variable, `@font-face` in
+`main.css`) and JetBrains Mono (imported in `main.ts`), Latin subset only — and
+a fluid `clamp()` scale: headings resize with the viewport rather than stepping
+at breakpoints. The display size is also capped by viewport height so the hero
+call-to-action stays above the fold on 1366×768 and 1280×720 laptops.
+
+Solid accent buttons use `--accent-fill`, not `--accent`, so white label text
+keeps 4.5:1 contrast. Dark panels (contact card, footer) use the `--footer`
+tokens, which stay dark in both themes; use the `inverse` button variant and
+`SocialLinks tone="inverse"` on them.
 
 ## Motion
 
@@ -180,13 +190,27 @@ variant used for text and must stay readable on `--surface`.
 
 1. Push to GitHub.
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repository.
-3. Vercel detects Vite automatically. The defaults are correct:
-   - **Framework preset:** Vite
-   - **Build command:** `npm run build`
-   - **Output directory:** `dist`
+3. Vercel detects Vite automatically, and `vercel.json` pins the build command
+   (`npm run build`) and output directory (`dist`).
 4. Deploy.
 
-No `vercel.json` is needed for a static Vite build.
+`vercel.json` also sets a one-year immutable cache on the hashed files in
+`/assets` and a few security headers (HSTS, nosniff, frame denial, referrer
+policy).
+
+**Absolute URLs for link previews.** LinkedIn, X and Slack ignore relative
+`og:image` paths, so `index.html` uses a `%SITE_URL%` placeholder that
+`vite.config.ts` fills in at build time:
+
+- On Vercel it uses `VERCEL_PROJECT_PRODUCTION_URL` automatically — nothing to
+  configure.
+- To pin a custom domain, add an environment variable `SITE_URL`
+  (e.g. `https://mbithievans.dev`, no trailing slash) in the Vercel project
+  settings.
+- Local builds without either print a warning and fall back to relative URLs.
+
+After the first production deploy, paste the URL into LinkedIn's
+[Post Inspector](https://www.linkedin.com/post-inspector/) to check the card.
 
 Pushes to `main` become production deploys; pushes to `development` and pull
 requests get their own preview URLs.
@@ -201,8 +225,6 @@ requests get their own preview URLs.
 - **TypeScript is pinned to `~5.9`.** TypeScript 7 (the Go-native port) does not
   expose the `./lib/tsc` subpath that `vue-tsc` depends on. Do not bump it past
   5.x until `vue-tsc` supports TS 7.
-- Fonts are loaded from Google Fonts. Self-hosting them would remove a
-  third-party request and improve privacy — a reasonable follow-up.
 
 ## License
 

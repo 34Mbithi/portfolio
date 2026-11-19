@@ -14,15 +14,17 @@
     <meta name="theme-color" content="#fbfcfd" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#10171f" media="(prefers-color-scheme: dark)" />
 
-    <!-- Open Graph / social sharing. Add og:url and a canonical link when the
-         final production domain is confirmed. -->
+    <!-- The SITE_URL placeholder is replaced at build time (vite.config.ts). Social
+         crawlers ignore relative image paths, so these must be absolute. -->
+    <link rel="canonical" href="%SITE_URL%/" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="%SITE_URL%/" />
     <meta property="og:title" content="Mbithi Evans — Full-Stack Developer" />
     <meta
       property="og:description"
       content="Portfolio of Mbithi Evans, a full-stack developer in Nairobi building REST APIs with Laravel and Flask, and interfaces with Vue and React."
     />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Mbithi Evans — full-stack developer portfolio" />
@@ -32,14 +34,7 @@
       name="twitter:description"
       content="Full-stack developer building REST APIs and the interfaces on top of them."
     />
-    <meta name="twitter:image" content="/og-image.png" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.jpg" />
 
     <script>
       // Applies the stored theme before first paint so dark mode never flashes
@@ -63,6 +58,7 @@
         "@type": "Person",
         "name": "Mbithi Evans",
         "jobTitle": "Full-stack developer",
+        "url": "%SITE_URL%/",
         "email": "mailto:mbithienzioka2019@gmail.com",
         "homeLocation": {
           "@type": "Place",
