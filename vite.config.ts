@@ -27,8 +27,11 @@ function siteUrl(): Plugin {
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
-        if (!url && !ctx.server) {
-          this.warn('SITE_URL is not set: social preview tags will use relative URLs.')
+        if (!url) {
+          if (!ctx.server) this.warn('SITE_URL is not set: social preview tags will use relative URLs.')
+          // A relative canonical is meaningless, and Vite would try to bundle
+          // href="/" as a file (EISDIR). Drop the tag rather than ship it.
+          html = html.replace(/^\s*<link rel="canonical"[^>]*>\n/m, '')
         }
         return html.replaceAll('%SITE_URL%', url)
       },
